@@ -157,7 +157,6 @@ public class TemperatureSeriesAnalysis {
     }
 
     public int addTemps(double... temps) {
-        System.out.println(temps.length);
         for (double temperature : temps) {
             if (temperature < MIN_TEMP) {
                 throw new InputMismatchException();
