@@ -7,6 +7,7 @@ import java.util.InputMismatchException;
 
 @Getter
 public class TemperatureSeriesAnalysis {
+    static final double MIN_TEMP = -273;
     private double[] temperatureSeries;
     private int seriesSize;
 
@@ -17,11 +18,12 @@ public class TemperatureSeriesAnalysis {
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
         for (double temperature : temperatureSeries) {
-            if (temperature < -273) {
+            if (temperature < MIN_TEMP) {
                 throw new InputMismatchException();
             }
         }
-        this.temperatureSeries = Arrays.copyOf(temperatureSeries, temperatureSeries.length);
+        this.temperatureSeries = Arrays.copyOf(
+                temperatureSeries, temperatureSeries.length);
         seriesSize = temperatureSeries.length;
     }
 
@@ -47,7 +49,7 @@ public class TemperatureSeriesAnalysis {
         double temperature;
         for (int i = 0; i < seriesSize; i++) {
             temperature = temperatureSeries[i];
-            squareSum += Math.pow(temperature - average, 2);
+            squareSum += (temperature - average) * (temperature - average);
         }
         return Math.sqrt(squareSum / seriesSize);
     }
@@ -111,7 +113,7 @@ public class TemperatureSeriesAnalysis {
         if (seriesSize == 0) {
             throw new IllegalArgumentException();
         }
-        double smallerTemp[] = new double[seriesSize];
+        double[] smallerTemp = new double[seriesSize];
         int ind = 0;
         double temperature;
         for (int i = 0; i < seriesSize; i++) {
@@ -128,7 +130,7 @@ public class TemperatureSeriesAnalysis {
         if (seriesSize == 0) {
             throw new IllegalArgumentException();
         }
-        double greaterTemp[] = new double[seriesSize];
+        double[] greaterTemp = new double[seriesSize];
         int ind = 0;
         double temperature;
         for (int i = 0; i < seriesSize; i++) {
@@ -145,7 +147,8 @@ public class TemperatureSeriesAnalysis {
         if (seriesSize == 0) {
             throw new IllegalArgumentException();
         }
-        TempSummaryStatistics tempSummaryStatistics = new TempSummaryStatistics();
+        TempSummaryStatistics tempSummaryStatistics =
+                new TempSummaryStatistics();
         tempSummaryStatistics.setAvgTemp(this.average());
         tempSummaryStatistics.setDevTemp(this.deviation());
         tempSummaryStatistics.setMaxTemp(this.max());
@@ -156,7 +159,7 @@ public class TemperatureSeriesAnalysis {
     public int addTemps(double... temps) {
         System.out.println(temps.length);
         for (double temperature : temps) {
-            if (temperature < -273) {
+            if (temperature < MIN_TEMP) {
                 throw new InputMismatchException();
             }
         }
@@ -171,8 +174,9 @@ public class TemperatureSeriesAnalysis {
             newSize *= 2;
         }
         if (newSize != temperatureSeries.length) {
-            double newTempSeries[] = new double[newSize];
-            System.arraycopy(temperatureSeries, 0, newTempSeries, 0, seriesSize);
+            double[] newTempSeries = new double[newSize];
+            System.arraycopy(temperatureSeries, 0, newTempSeries,
+                             0, seriesSize);
             temperatureSeries = newTempSeries;
         }
         System.arraycopy(temps, 0, temperatureSeries, seriesSize, temps.length);
