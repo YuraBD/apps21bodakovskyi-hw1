@@ -245,4 +245,14 @@ public class TemperatureSeriesAnalysisTest {
 
         assertArrayEquals(expResult, actualResult, 0.00001);
     }
+
+    @Test
+    public void testSummaryStatistics() {
+        double[] temperatureSeries = {34.0, 35.0, 36.0, 37.0, 38.0, 39.0, 40.0};
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+        TempSummaryStatistics tss = seriesAnalysis.summaryStatistics();
+        String expResult = "TempSummaryStatistics(avgTemp=37.0, devTemp=2.0, minTemp=34.0, maxTemp=40.0)";
+        String actualResult = tss.toString();
+        assertEquals(expResult, actualResult);
+    }
 }
