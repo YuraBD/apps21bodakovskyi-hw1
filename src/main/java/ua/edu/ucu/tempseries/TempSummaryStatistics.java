@@ -5,7 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Getter @Setter @ToString
-public class TempSummaryStatistics {
+public final class TempSummaryStatistics {
     private double avgTemp;
     private double devTemp;
     private double minTemp;
